@@ -4,7 +4,7 @@ require 'pry'
 class Scraper
 
   def self.scrape_index_page(index_url)
-    students_hash = {}
+    students_hash = []
     html = Nokogiri::HTML(open(index_url))
     html.css(".student_card").collect do |student|
       hash = {
@@ -12,7 +12,7 @@ class Scraper
         location: student.css("p.student-location").text,
         profile_url: "http//students.learn.co/" + student.css("a").attribute("href")
       }
-      students_hash = hash
+      students_hash << hash
     end
     students_hash
   end
