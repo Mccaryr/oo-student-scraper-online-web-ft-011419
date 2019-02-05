@@ -19,7 +19,7 @@ class Scraper
 
   def self.scrape_profile_page(profile_url)
     students_hash = {}
-      end
+      
 
 
          html = Nokogiri::HTML(open(profile_url))
