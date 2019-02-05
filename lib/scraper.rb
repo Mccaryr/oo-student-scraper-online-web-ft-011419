@@ -4,19 +4,22 @@ require 'pry'
 class Scraper
 
   def self.scrape_index_page(index_url)
-    html=open(index_url)
-      studentPage=Nokogiri::HTML(html)
+    doc = Nokogiri::HTML(open(index_url))
+    student_index_array = []
 
-      students=[]
-      studentPage.css("div.student-card").each do |student|
-        students << {
-          :name => student.css("h4.student-name").text,
-          :location => student.css("p.student-location").text,
-          :profile_url => "./fixtures/student-site/" + student.css("a").attribute("href").value
-          }
+    doc.css(".roster-cards-container").each do |profile|
+      profile.css(".student-card a").each do |student_card|
+        student = {}
+        student[:name] = student_card.css(".student-name").text
+        student[:location] = student_card.css(".student-location").text
+        student[:profile_url] = student_card.attribute("href").value
+        student_index_array << student
       end
-      students
+
     end
+    #binding.pry
+    student_index_array
+  end
 
   def self.scrape_profile_page(profile_url)
     profile = Nokogiri::HTML(open(profile_url))
