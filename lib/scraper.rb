@@ -12,7 +12,7 @@ class Scraper
         location: student.css("p.student-location").text,
         profile_url: "http//students.learn.co/" + student.css("a").attribute("href")
       }
-      students_hash << hash
+      students_hash = hash
     end
     students_hash
   end
